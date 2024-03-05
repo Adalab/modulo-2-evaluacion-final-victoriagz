@@ -4,6 +4,8 @@ const buttonSearch = document.querySelector("#search");
 const list = document.querySelector("#list");
 const favoritesContainer = document.querySelector("#favorite-list");
 
+const dataSeriesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
+
 let favoritesList = [];
 let seriesList = [];
 
@@ -12,18 +14,16 @@ function handleFavorite(event) {
   const elementIndex = Array.from(list.children).indexOf(clickedElement);
   const selectedElement = seriesList[elementIndex];
 
-  // Comprobar si el elemento ya está en la lista de favoritos
   if (favoritesList.some((item) => item.mal_id === selectedElement.mal_id)) {
     console.log("El elemento ya está en la lista de favoritos");
     return;
   }
 
-  // Añadir el elemento a la lista de favoritos
   favoritesList.push(selectedElement);
 
-  // Renderizar la lista de favoritos
   renderFavorites();
 }
+
 function renderFavorites() {
   favoritesContainer.innerHTML = "";
 
@@ -75,13 +75,13 @@ function handleSearch() {
     .then((dataResult) => {
       seriesList = dataResult.data;
       renderList(seriesList, list);
-      localStorage.setItem("results", JSON.stringify(seriesList));
+      localStorage.setItem("favoritesList", JSON.stringify(favoritesList));
     });
 
-  const dataSeriesLocalStorage = JSON.parse(localStorage.getItem("results"));
+  const dataSeriesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
   if (dataSeriesLocalStorage !== null) {
-    seriesList = dataSeriesLocalStorage;
-    renderList(dataSeriesLocalStorage, list);
+    favorites = favoritesLocalStorage;
+    renderFavorites(favoritesLocalStorage, favorites);
   }
 }
 
