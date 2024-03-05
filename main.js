@@ -1,88 +1,107 @@
 "use strict";
-const inputSearch = document.querySelector("#input-search");
-const buttonSearch = document.querySelector("#search");
+
 const list = document.querySelector("#list");
 const favoritesContainer = document.querySelector("#favorite-list");
 
-const dataSeriesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
+const GET_FAVORITES_KEY = "favoritesList";
 
-let favoritesList = [];
-let seriesList = [];
+let animeList = [];
 
-function handleFavorite(event) {
+function onHandleFavoriteClick(event) {
   const clickedElement = event.target.parentElement;
   const elementIndex = Array.from(list.children).indexOf(clickedElement);
-  const selectedElement = seriesList[elementIndex];
+  const foundElement = animeList[elementIndex];
+  const favoritesStored = localStorage.getItem(GET_FAVORITES_KEY);
+  let stored = [];
 
-  if (favoritesList.some((item) => item.mal_id === selectedElement.mal_id)) {
-    console.log("El elemento ya está en la lista de favoritos");
+  if (!foundElement) return;
+
+  if (favoritesStored !== null) {
+    stored = JSON.parse(favoritesStored);
+  }
+
+  if (stored.some((item) => item.mal_id === foundElement.mal_id)) {
+    alert("El elemento ya está en la lista de favoritos");
     return;
   }
 
-  favoritesList.push(selectedElement);
-
-  renderFavorites();
+  stored.push(foundElement);
+  localStorage.setItem(GET_FAVORITES_KEY, JSON.stringify(stored));
+  renderFavorites(stored);
 }
 
-function renderFavorites() {
+function handleIteration(anime) {
+  const listItem = document.createElement("li");
+  const image = document.createElement("img");
+  const title = document.createElement("p");
+
+  title.textContent = anime.title;
+  image.src = anime.images.jpg.small_image_url;
+  image.alt = "Anime Image";
+
+  listItem.appendChild(image);
+  listItem.appendChild(title);
+
+  return { listItem, image, title };
+}
+
+function renderFavorites(favorites) {
   favoritesContainer.innerHTML = "";
 
-  for (const element of favoritesList) {
-    const listItem = document.createElement("li");
-    const image = document.createElement("img");
-    const title = document.createElement("p");
-
-    title.textContent = element.title;
-    image.src = element.images.jpg.small_image_url;
-    image.alt = "Anime Image";
-
-    listItem.appendChild(image);
-    listItem.appendChild(title);
-    favoritesContainer.appendChild(listItem);
+  for (const anime of favorites) {
+    const data = handleIteration(anime);
+    favoritesContainer.appendChild(data.listItem);
   }
 }
 
-function renderList(elements) {
+function renderList(animes) {
   list.innerHTML = "";
 
-  for (const element of elements) {
-    const listItem = document.createElement("li");
-    const image = document.createElement("img");
-    const title = document.createElement("p");
-
-    title.textContent = element.title;
-    image.src = element.images.jpg.image_url;
-    image.alt = "Anime Image";
-
-    listItem.appendChild(image);
-    listItem.appendChild(title);
-    list.appendChild(listItem);
-    listItem.addEventListener("click", handleFavorite);
+  for (const anime of animes) {
+    const data = handleIteration(anime);
+    list.appendChild(data.listItem);
+    data.listItem.addEventListener("click", onHandleFavoriteClick);
   }
 }
 
-function handleSearch() {
-  const inputValue = inputSearch.value;
-  console.log(inputValue);
-  if (inputValue === "") {
+async function fetchList(query) {
+  const url = `https://api.jikan.moe/v4/anime?q=${query}`;
+  const response = await fetch(url);
+  const dataResult = await response.json();
+  renderList(dataResult.data);
+  animeList = dataResult.data;
+}
+
+async function handleSearch() {
+  const inputSearch = document.querySelector("#input-search").value;
+  if (inputSearch === "") {
     list.innerHTML = "Por favor, ingresa el nombre de una serie Anime. ";
     return;
   }
 
-  const url = `https://api.jikan.moe/v4/anime?q=${inputValue}`;
-  fetch(url)
-    .then((response) => response.json())
-    .then((dataResult) => {
-      seriesList = dataResult.data;
-      renderList(seriesList, list);
-      localStorage.setItem("favoritesList", JSON.stringify(favoritesList));
-    });
+  await fetchList(inputSearch);
+}
 
-  const dataSeriesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
-  if (dataSeriesLocalStorage !== null) {
-    favorites = favoritesLocalStorage;
-    renderFavorites(favoritesLocalStorage, favorites);
+function handleStoredFavorites() {
+  const dataCruda = localStorage.getItem(GET_FAVORITES_KEY);
+
+  if (dataCruda !== null) {
+    const storedFavorites = JSON.parse(dataCruda);
+    renderFavorites(storedFavorites);
   }
 }
 
-buttonSearch.addEventListener("click", handleSearch);
+function handleDelete() {
+  const confirmation = confirm(
+    "¿Estás seguro de que quieres borrar todos los datos del almacenamiento local?"
+  );
+
+  if (confirmation) {
+    localStorage.setItem(GET_FAVORITES_KEY, JSON.stringify([]));
+    favoritesContainer.innerHTML = "";
+  }
+}
+
+handleStoredFavorites();
+document.querySelector("#search").addEventListener("click", handleSearch);
+document.querySelector("#delete-btn").addEventListener("click", handleDelete);
