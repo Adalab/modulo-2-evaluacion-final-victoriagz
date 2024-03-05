@@ -2,14 +2,27 @@
 const inputSearch = document.querySelector("#input-search");
 const buttonSearch = document.querySelector("#search");
 const list = document.querySelector("#list");
+const favoritesContainer = document.querySelector("#favorite-list");
+
+let favoritesList = [];
+let seriesList = [];
+
+function handleFavorite(event) {
+  const serieSelected = seriesList.find((element) => {
+    return event.currentTarget.id === element.id;
+  });
+  console.log(favoritesList);
+  const indexSerieFavorited = favoritesList.findIndex((favoriteItem) => {
+    return favoriteItem.id === event.currentTarget.id;
+  });
+  if (indexSerieFavorited === -1) {
+    favoritesList.push(serieSelected);
+  }
+  renderList(favoritesList, favoritesContainer);
+}
 
 function renderList(elements) {
   list.innerHTML = "";
-
-  const results = document.querySelector("#results");
-  const message = document.createElement("p");
-  message.innerHTML = "Resultados:";
-  results.appendChild(message);
 
   for (const element of elements) {
     const listItem = document.createElement("li");
@@ -23,6 +36,7 @@ function renderList(elements) {
     listItem.appendChild(image);
     listItem.appendChild(title);
     list.appendChild(listItem);
+    listItem.addEventListener("click", handleFavorite);
   }
 }
 
@@ -33,13 +47,21 @@ function handleSearch() {
     list.innerHTML = "Por favor, ingresa el nombre de una serie Anime. ";
     return;
   }
+
   const url = `https://api.jikan.moe/v4/anime?q=${inputValue}`;
   fetch(url)
     .then((response) => response.json())
-    .then((data) => {
-      const results = data.data;
-      renderList(results);
+    .then((dataResult) => {
+      seriesList = dataResult.data;
+      renderList(seriesList, list);
+      localStorage.setItem("results", JSON.stringify(seriesList));
     });
+
+  const dataSeriesLocalStorage = JSON.parse(localStorage.getItem("results"));
+  if (dataSeriesLocalStorage !== null) {
+    seriesList = dataSeriesLocalStorage;
+    renderList(dataSeriesLocalStorage, list);
+  }
 }
 
 buttonSearch.addEventListener("click", handleSearch);
