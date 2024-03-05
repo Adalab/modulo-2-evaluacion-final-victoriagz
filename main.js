@@ -67,41 +67,40 @@ function renderList(animes) {
 async function fetchList(query) {
   const url = `https://api.jikan.moe/v4/anime?q=${query}`;
   const response = await fetch(url);
-  const dataResult = await response.json();
-  renderList(dataResult.data);
-  animeList = dataResult.data;
+  return await response.json();
 }
 
 async function handleSearch() {
   const inputSearch = document.querySelector("#input-search").value;
   if (inputSearch === "") {
-    list.innerHTML = "Por favor, ingresa el nombre de una serie Anime. ";
+    alert("Por favor, ingresa el nombre de una serie Anime.");
     return;
   }
 
-  await fetchList(inputSearch);
+  const response = await fetchList(inputSearch);
+  animeList = response.data;
+  renderList(response.data);
 }
 
 function handleStoredFavorites() {
   const dataCruda = localStorage.getItem(GET_FAVORITES_KEY);
-
-  if (dataCruda !== null) {
-    const storedFavorites = JSON.parse(dataCruda);
-    renderFavorites(storedFavorites);
-  }
+  if (dataCruda !== null) renderFavorites(JSON.parse(dataCruda));
 }
 
-function handleDelete() {
+function handleDeleteAll() {
   const confirmation = confirm(
     "¿Estás seguro de que quieres borrar todos los datos del almacenamiento local?"
   );
 
   if (confirmation) {
     localStorage.setItem(GET_FAVORITES_KEY, JSON.stringify([]));
+    // para borrar los datos, y mantener la KEY
     favoritesContainer.innerHTML = "";
   }
 }
 
 handleStoredFavorites();
 document.querySelector("#search").addEventListener("click", handleSearch);
-document.querySelector("#delete-btn").addEventListener("click", handleDelete);
+document
+  .querySelector("#delete-btn")
+  .addEventListener("click", handleDeleteAll);
