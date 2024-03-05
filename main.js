@@ -8,17 +8,38 @@ let favoritesList = [];
 let seriesList = [];
 
 function handleFavorite(event) {
-  const serieSelected = seriesList.find((element) => {
-    return event.currentTarget.id === element.id;
-  });
-  console.log(favoritesList);
-  const indexSerieFavorited = favoritesList.findIndex((favoriteItem) => {
-    return favoriteItem.id === event.currentTarget.id;
-  });
-  if (indexSerieFavorited === -1) {
-    favoritesList.push(serieSelected);
+  const clickedElement = event.target.parentElement;
+  const elementIndex = Array.from(list.children).indexOf(clickedElement);
+  const selectedElement = seriesList[elementIndex];
+
+  // Comprobar si el elemento ya está en la lista de favoritos
+  if (favoritesList.some((item) => item.mal_id === selectedElement.mal_id)) {
+    console.log("El elemento ya está en la lista de favoritos");
+    return;
   }
-  renderList(favoritesList, favoritesContainer);
+
+  // Añadir el elemento a la lista de favoritos
+  favoritesList.push(selectedElement);
+
+  // Renderizar la lista de favoritos
+  renderFavorites();
+}
+function renderFavorites() {
+  favoritesContainer.innerHTML = "";
+
+  for (const element of favoritesList) {
+    const listItem = document.createElement("li");
+    const image = document.createElement("img");
+    const title = document.createElement("p");
+
+    title.textContent = element.title;
+    image.src = element.images.jpg.small_image_url;
+    image.alt = "Anime Image";
+
+    listItem.appendChild(image);
+    listItem.appendChild(title);
+    favoritesContainer.appendChild(listItem);
+  }
 }
 
 function renderList(elements) {
@@ -30,7 +51,7 @@ function renderList(elements) {
     const title = document.createElement("p");
 
     title.textContent = element.title;
-    image.src = element.images.jpg.large_image_url;
+    image.src = element.images.jpg.image_url;
     image.alt = "Anime Image";
 
     listItem.appendChild(image);

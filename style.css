@@ -1,75 +1,93 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+*{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
 
 .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Para colocar los contenedores uno al lado del otro */
+    align-items: flex-start;
     max-width: 800px;
     margin: 20px auto;
+}
+
+.favorites, .results {
+    flex: 0 1 45%; /* Los contenedores ocupan el 45% del espacio disponible */
     padding: 20px;
     background-color: #fff;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.favorites,
-.results {
-    flex-basis: 45%;
-}
-
-.favorites {
-    background-color: #f5f5f5;
-    padding: 20px;
-}
-
-.results {
-    padding: 20px;
+    height: 100vh; 
+    overflow-y: auto;
 }
 
 h1 {
     text-align: center;
     color: #333;
+    margin-bottom: 20px; /* Añade espacio entre el título y los contenedores */
 }
 
 h2 {
+    position: sticky;
+    margin-top: 0;
     color: #333;
 }
 
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.input-container {
+    margin-bottom: 20px;
 }
 
-button {
-    padding: 10px 20px;
+.input-container input[type="text"] {
+    width: calc(100% - 70px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-container button {
+    width: 60px;
+    padding: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-button:hover {
+.input-container button:hover {
     background-color: #0056b3;
 }
 
 .list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .list li {
+    margin-bottom: 10px;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.list li:last-child {
-    border-bottom: none;
+.list li:hover {
+    background-color: #e9ecef;
+}
+
+.image {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.title {
+    margin: 0;
+    color: #333;
 }
 
