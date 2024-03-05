@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Naturo</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div>
-        <h1>Buscador de series de Anime</h1>
-        <input id="input-search" type="text">
+
+    <h1>Buscador de series de Anime</h1>
+
+    <div class="container">
+    <aside class="favorites">
+        <h2>Series Favoritas</h2>
+        <ul id="favorite-list"></ul>
+    </aside>
+    <div class="results">
+        <h2>Busca aquí tu serie</h2>
+        <input placeholder="Introduce tu serie favorita" id="input-search" type="text">
         <button id="search">Buscar</button>
-        <ul id="list"></ul>
+        <div id="results"></div>
+        <ul class="list" id="list"></ul>
     </div>
+</div>
 
     <script src="./main.js"></script>
 </body>

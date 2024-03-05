@@ -3,3 +3,31 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;
+}
+
+.favorites {
+    flex: 1; 
+    padding: 20px;
+}
+
+.results {
+    flex: 1; 
+    padding: 20px;
+}
+
+.list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list li {
+    margin-bottom: 20px;
+}

@@ -5,10 +5,12 @@ const list = document.querySelector("#list");
 
 function renderList(elements) {
   list.innerHTML = "";
-  if (!Array.isArray(elements)) {
-    console.error("Los elementos no son un arreglo.");
-    return;
-  }
+
+  const results = document.querySelector("#results");
+  const message = document.createElement("p");
+  message.innerHTML = "Resultados:";
+  results.appendChild(message);
+
   for (const element of elements) {
     const listItem = document.createElement("li");
     const image = document.createElement("img");
@@ -18,8 +20,8 @@ function renderList(elements) {
     image.src = element.images.jpg.large_image_url;
     image.alt = "Anime Image";
 
-    listItem.appendChild(title);
     listItem.appendChild(image);
+    listItem.appendChild(title);
     list.appendChild(listItem);
   }
 }
