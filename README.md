@@ -1,4 +1,4 @@
-<h1 align="left">Find your favorite Anime series</h1>
+<h1 align="center">Find your favorite Anime series</h1>
 
 ###
 
