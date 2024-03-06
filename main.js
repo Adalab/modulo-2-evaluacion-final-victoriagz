@@ -58,12 +58,16 @@ function handleIteration(anime) {
     title.textContent = anime.title;
     image.src = anime.images.jpg.large_image_url;
     image.alt = 'Anime Image';
+    image.style.borderRadius = '10px';
+    image.style.width = '100px';
+    image.style.height = '100%';
+    image.style.objectFit = 'cover';
     listItem.style.border = '1px solid #ccc';
     listItem.style.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.1)';
     listItem.style.padding = '20px';
     listItem.style.display = 'flex';
-    listItem.style.alignItems = 'center';
-    listItem.style.justifyContent = 'center';
+    listItem.style.alignItems = 'rigth';
+    listItem.style.justifyContent = 'rigth';
 
     if (anime.images.jpg.large_image_url === FAKED_IMAGE_URL) {
         image.src = DEFAULT_IMAGE;

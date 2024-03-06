@@ -104,3 +104,7 @@ h2 {
 .list li {
     margin-bottom: 5px;
 }
+
+list-decoration {
+  border-radius: 50%;
+}
