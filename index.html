@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naruto</title>
+    <title>Buscador de series Anime</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Honk&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h1>Buscador de series de Anime</h1>
-
-    <div class="container">
-    <aside class="favorites">
-        <button id="delete-btn">Borrar todo</button>
-        <h2>Series Favoritas</h2>
-        <section id="favorite-list"></section>
-    </aside>
-    <div class="results">
-        <h2>Busca aquí tu serie</h2>
-        <input placeholder="Introduce tu serie favorita" id="input-search" type="text">
-        <button id="search">Buscar</button>
-        <div id="results"></div>
-        <ul class="list" id="list"></ul>
-    </div>
-</div>
+    <header>
+        <h1>Buscador de series de Anime</h1>
+    </header>
+  
+    <main>
+        <div class="container">
+            <aside class="favorites">
+                <h2>Series Favoritas</h2>
+                <button class="button" id="delete-btn">Borrar todo</button>
+                <section id="favorite-list"></section>
+            </aside>
+            <div class="results">
+                <h2>Busca aquí tu serie</h2>
+                <input placeholder="Introduce tu serie favorita" id="input-search" type="text">
+                <button class="button" id="search">Buscar</button>
+                <div id="results"></div>
+                <ul class="list" id="list"></ul>
+            </div>
+        </div>
+        
+    </main>
 
     <script src="./main.js"></script>
 </body>

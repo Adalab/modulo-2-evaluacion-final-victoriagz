@@ -30,14 +30,31 @@ function onHandleFavoriteClick(event) {
   renderFavorites(stored);
 }
 
+function handleDeleteFavorite(index) {
+  let storedFavorites = localStorage.getItem(GET_FAVORITES_KEY);
+
+  if (storedFavorites !== null) {
+    storedFavorites = JSON.parse(storedFavorites);
+    storedFavorites.splice(index, 1);
+    localStorage.setItem(GET_FAVORITES_KEY, JSON.stringify(storedFavorites));
+    renderFavorites(storedFavorites);
+  }
+}
+
 function handleIteration(anime) {
   const listItem = document.createElement("li");
   const image = document.createElement("img");
   const title = document.createElement("p");
 
   title.textContent = anime.title;
-  image.src = anime.images.jpg.small_image_url;
+  image.src = anime.images.jpg.large_image_url;
   image.alt = "Anime Image";
+  listItem.style.border = "1px solid #ccc";
+  listItem.style.boxShadow = "2px 2px 4px rgba(0, 0, 0, 0.1)";
+  listItem.style.padding = "20px";
+  listItem.style.display = "flex";
+  listItem.style.alignItems = "center";
+  listItem.style.justifyContent = "center";
 
   listItem.appendChild(image);
   listItem.appendChild(title);
@@ -48,10 +65,16 @@ function handleIteration(anime) {
 function renderFavorites(favorites) {
   favoritesContainer.innerHTML = "";
 
-  for (const anime of favorites) {
+  favorites.forEach((anime, index) => {
     const data = handleIteration(anime);
-    favoritesContainer.appendChild(data.listItem);
-  }
+    const listItem = data.listItem;
+
+    listItem.addEventListener("click", function () {
+      handleDeleteFavorite(index);
+    });
+
+    favoritesContainer.appendChild(listItem);
+  });
 }
 
 function renderList(animes) {
