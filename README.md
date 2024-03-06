@@ -13,7 +13,7 @@
 
 ###
 
-<p align="left">El ejercicio consiste en desarrollar una aplicación web de búsqueda de series de anime, que nos permite<br>des/marcar las series como favoritas y guardarlas en local storage.<br>El ejercicio también tiene una parte de maquetación con HTML y estilos, os recomendamos dedicar<br>esfuerzo a la maquetación una vez terminada la parte de JavaScript, ya que los criterios de evaluación<br>están relacionados con esta última.</p>
+<p align="left">El ejercicio consiste en desarrollar una aplicación web de búsqueda de series de anime, que nos permite des/marcar las series como favoritas y guardarlas en local storage.El ejercicio también tiene una parte de maquetación con HTML y styles.</p>
 
 ###
 
