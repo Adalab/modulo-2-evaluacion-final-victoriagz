@@ -135,8 +135,14 @@ function handleDeleteAll() {
     }
 }
 
+function handleResetList() {
+    list.innerHTML = [];
+}
+
 handleStoredFavorites();
 document.querySelector('#search').addEventListener('click', handleSearch);
 document
     .querySelector('#delete-btn')
     .addEventListener('click', handleDeleteAll);
+
+document.querySelector('#reset').addEventListener('click', handleResetList);
