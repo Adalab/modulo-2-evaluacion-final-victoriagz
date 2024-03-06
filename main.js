@@ -5,6 +5,12 @@ const favoritesContainer = document.querySelector('#favorite-list');
 
 const GET_FAVORITES_KEY = 'favoritesList';
 
+const FAKED_IMAGE_URL =
+    'https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png';
+
+const DEFAULT_IMAGE =
+    'https://st4.depositphotos.com/20858482/38056/v/450/depositphotos_380564934-stock-illustration-smile-icon-happy-face-symbol.jpg';
+
 let animeList = [];
 
 function onHandleFavoriteClick(event) {
@@ -59,14 +65,8 @@ function handleIteration(anime) {
     listItem.style.alignItems = 'center';
     listItem.style.justifyContent = 'center';
 
-    if (
-        anime.images.jpg.large_image_url ===
-        'https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'
-    ) {
-        image.src =
-            'https://st4.depositphotos.com/20858482/38056/v/450/depositphotos_380564934-stock-illustration-smile-icon-happy-face-symbol.jpg';
-    } else {
-        image.src = anime.images.jpg.large_image_url;
+    if (anime.images.jpg.large_image_url === FAKED_IMAGE_URL) {
+        image.src = DEFAULT_IMAGE;
     }
 
     listItem.appendChild(image);
